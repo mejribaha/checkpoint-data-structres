@@ -1,0 +1,53 @@
+ALGORITHM algorithm_name
+VAR
+    i, j, sumDistincts, sumOverlapping, count  : INTEGER:=0;
+    lg1, lg2 : INTEGER;
+    tabOne : ARRAY_OF INTEGER[lg1];
+    tabTwo : ARRAY_OF INTEGER[lg2];
+    htable : HASH_TABLE<INTEGER,INTEGER>
+BEGIN
+    REPEAT
+    Write("Please enter the first array length");
+    Read(lg1);
+    Write("Please enter the second array length");
+    Read(lg2);
+    UNTIL (lg1 <0 AND lg2<0)
+    FOR i FROM 0 TO lg1-1 DO
+        Read(tabOne[i]);
+    END_FOR
+    FOR j FROM 0 TO lg2-1 DO
+        Read(tabTwo[j]);
+    END_FOR
+    WHILE (i < lg1) DO
+        IF (htable.lookup(tabOne[i])) THEN
+            count := htable.get(tabOne[i]);
+            htable.insert(tabOne[i], count + 1 )
+        ELSE
+            htable.insert(tabOne[i], 1)
+        END_IF
+    END_WHILE
+    WHILE (j < lg2) DO
+        IF (htable.lookup(tabTwo[j])) THEN
+            count := htable.get(tabTwo[j]);
+            htable.insert(tabTwo[j], count + 1 )
+        ELSE
+            htable.insert(tabTwo[j], 1)
+        END_IF
+    END_WHILE
+    FOR i FROM 0 TO lg1-1 STEP 1  DO
+        IF (htable.get(tabOne[i])===1) THEN
+            sumDistincts = sumDistincts + tabOne[i]
+        ELSE 
+        sumOverlapping = sumOverlapping + tabOne[i]
+        END_IF
+    END_FOR
+    FOR j FROM 0 TO lg2-1 STEP 1  DO
+        IF (htable.get(tabTwo[j])===1) THEN
+            sumDistincts = sumDistincts + tabTwo[j]
+        ELSE 
+        sumOverlapping = sumOverlapping + tabtWO[j]
+        END_IF
+    END_FOR
+    Write("final sum of distincts elements is : ",sumDistincts )
+    Write("final sum of overlapping elements is : ",sumOverlapping )
+END
